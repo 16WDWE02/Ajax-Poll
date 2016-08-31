@@ -17,6 +17,9 @@
 	<h1>AJAX Poll</h1>
 	<p>Do you like Ice Cream?</p>
 
+
+	<!-- Form for Poll -->
+	<!-- Name for input needs to be the same  -->
 	<form id="poll">
 		<div>
 			<input type="radio" value="yes" id="vote-yes" name="vote">

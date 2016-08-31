@@ -11,6 +11,7 @@ $validVotes = ['yes', 'no'];
 //Validate the vote
 $isValid = in_array($vote, $validVotes);
 
+//If vote is not in the array
 if($isValid == false){
 	$message = [
 		'status' => false,
@@ -23,8 +24,10 @@ if($isValid == false){
 	//Prepare the header
 	header('Content-Type: application/json');
 
+	//Send the message variable to js
 	echo $message;
 
+	//Terminates the current process
 	exit();
 }
 
@@ -50,11 +53,13 @@ if($dbc->affected_rows == 1){
 	//Get the vote summary
 	$sql = "SELECT SUM( (CASE WHEN vote = 'yes' THEN 1 ELSE 0 END) ) AS TotalYes, SUM( (CASE WHEN vote = 'no' THEN 1 ELSE 0 END) ) AS TotalNo FROM vote";
 
+	//Run the query
 	$result = $dbc->query($sql);
 
 	//Convert into an associative array
 	$result = $result->fetch_assoc();
 
+	//Write the message which will be sent to js
 	$message = [
 		'status' => true,
 		'message' => 'Thank you for your vote',
@@ -65,6 +70,7 @@ if($dbc->affected_rows == 1){
 	//Prepare the header
 	header('Content-Type: application/json');
 
+	//Turn variable into json and then send to js
 	echo json_encode($message);
 }
 

@@ -7,7 +7,7 @@ $(document).ready(function(){
 		// Find the checked option
 		var voteValue = $('[name=vote]:checked').val();
 
-		// Make sure the vote is valid
+		// Make sure someone has checked one of the options
 		if( voteValue == undefined){
 			// Display an error message
 			$('#message').html('Please select your vote!');
