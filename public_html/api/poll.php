@@ -19,7 +19,7 @@ if($isValid == false){
 	];
 
 	//Convert the message into JSON
-	$message-> json_encode($message);
+	$message=json_encode($message);
 
 	//Prepare the header
 	header('Content-Type: application/json');
@@ -40,6 +40,30 @@ $ipaddress = rand() . "\n";
 
 //Connect to database
 $dbc = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+//Check to make sure the voter has not voted before
+$sql = "SELECT ip_address FROM vote WHERE ip_address = '$ipaddress'";
+
+//Run the query
+$result = $dbc->query($sql);
+
+//Count the number of records returned
+if($result->num_rows >= 1){
+
+	//Prepare the message
+	$message = [
+		'status' => false,
+		'message' => 'You cannot vote more than once'
+	];
+
+	//prepare the header
+	header('Content-Type: application/json');
+
+	echo json_encode($message);
+
+	//Stop
+	exit();
+}
 
 //Prepare the insert query
 $sql = "INSERT INTO vote VALUES (NULL, '$vote', '$ipaddress')";
